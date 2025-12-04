@@ -6,7 +6,7 @@ function App() {
     useEffect(() => {
         const fetchMessage = async() => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}${import.meta.env.VITE_SERVER_API_PATH}`);
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/`);
                 const data = await response.text();
                 setMessage(data);
             } catch (error) {
