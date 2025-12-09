@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Button } from './components/ui/button';
 
 function App() {
     const [message, setMessage] = useState<string>("");
@@ -21,6 +22,7 @@ function App() {
     <div>
       <h1>Vite + Express Full Stack App</h1>
       <p>{message}</p>
+      <Button variant="outline">Click me</Button>
     </div>
   );
 }
