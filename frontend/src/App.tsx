@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Button } from './components/ui/button';
+import MyRoutes from './router/router';
 
 function App() {
     const [message, setMessage] = useState<string>("");
@@ -19,10 +20,11 @@ function App() {
     }, []);
 
   return (
-    <div>
+    <div className="m-auto">
+      <MyRoutes/>
       <h1>Vite + Express Full Stack App</h1>
       <p>{message}</p>
-      <Button variant="outline">Click me</Button>
+      <Button variant="ghost">Click me</Button>
     </div>
   );
 }
