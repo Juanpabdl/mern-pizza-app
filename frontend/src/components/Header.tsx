@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import MovileNav from "./MovileNav";
+import MainNav from "./MainNav";
 
 const Header = () => {
     return(
@@ -9,8 +10,11 @@ const Header = () => {
                 className="text-3xl font-bold tracking-tight text-orange-500 transition">
                     Mozzirella's Pizza
                 </Link>
-                <nav className="flex gap-6 text-lg md:hidden">
+                <nav className="gap-6 text-lg md:hidden">
                     <MovileNav/>
+                </nav>
+                <nav className="gap-6 hidden md:block ">
+                    <MainNav/>
                 </nav>
             </div>
         </header>
