@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react";
-import { Sheet, SheetTrigger, SheetTitle, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader } from "./ui/sheet";
+import { Sheet, SheetTrigger, SheetTitle, SheetContent, SheetDescription, SheetHeader } from "./ui/sheet";
 import { Separator } from "@radix-ui/react-separator";
 import { Button } from "./ui/button";
 
