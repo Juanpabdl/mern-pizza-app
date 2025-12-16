@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "@/pages/Layout";
+import HomePage from "@/pages/HomePage";
 
 const router = createBrowserRouter([
     {
@@ -7,7 +8,7 @@ const router = createBrowserRouter([
         errorElement: <div>Error, try again</div>,
         element: <Layout/>,
         children: [
-            {index: true, element: <div>Home</div>},
+            {index: true, element: <HomePage/>},
             {path: '/menu', element: <div>Menu Page</div>},
             {path: '/my-cart', element: <div>My Cart Page</div>},
         ]
