@@ -1,7 +1,8 @@
-import express = require("express");
-import cors = require("cors");
+import express from "express";
+import cors from "cors";
 import 'dotenv/config';
-import mongoose = require("mongoose");
+import mongoose from "mongoose";
+import myUserRoute from "./routes/myUserRoute.js";
 
 mongoose.connect(process.env.DB_CONNECTION_STRING as string || "", {})
   .then(() => {
@@ -14,6 +15,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/my/user", myUserRoute)
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend!");
