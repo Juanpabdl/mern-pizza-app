@@ -6,9 +6,9 @@ import myUserRoute from "./routes/myUserRoute.js";
 
 mongoose.connect(process.env.DB_CONNECTION_STRING as string || "", {})
   .then(() => {
-    console.log("Connected to MongoDB");})
+    console.log("Connected to database");})
   .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);});
+    console.error("Error connecting to database:", err);});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
