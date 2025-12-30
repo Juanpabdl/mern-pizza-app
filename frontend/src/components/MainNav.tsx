@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import UserMenu from "./UserMenu";
+import { Button } from "./ui/button";
 
 const MainNav = () => {
     const {loginWithRedirect, isAuthenticated} = useAuth0();
@@ -9,7 +10,7 @@ const MainNav = () => {
             {isAuthenticated ? (
                 <UserMenu/>
             ) : (
-                <Link to="/login" className="text-lg font-bold text-orange-500" onClick={async ()=> await loginWithRedirect()}>Log In</Link>
+                <Button variant='ghost' className="text-lg font-bold text-orange-500" onClick={async ()=> await loginWithRedirect()}>Log In</Button>
             )}
         </span>
     );
