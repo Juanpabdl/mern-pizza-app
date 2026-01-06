@@ -31,6 +31,34 @@ const createUser = async (req: Request, res: Response) => {
     }
 }
 
+const updateUser = async (req: Request, res: Response) => {
+    try {
+        const { username, city, country, addressLine } = req.body;
+
+        //1. Find the user by auth0Id
+        const user = await User.findById(req.userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        //2. Update the user fields
+        user.username = username;
+        user.city = city;
+        user.country = country;
+        user.addressLine = addressLine;
+
+        //3. Save the updated user
+        await user.save();
+
+        //4. Respond with success message
+        res.status(200).json({ message: "User updated successfully", user });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).json({ message: "Internal server error", error });
+    }
+}
+
 export default {
-    createUser
+    createUser,
+    updateUser
 };
