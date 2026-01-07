@@ -3,6 +3,7 @@ import Layout from "@/pages/Layout";
 import HomePage from "@/pages/HomePage";
 import Auth0ProviderWithNavigate from "@/auth/Auth0ProviderWithNavigate";
 import AuthCallBackPage from "@/pages/AuthCallbackPage";
+import UserProfilePage from "@/pages/UserProfilePage";
 
 const router = createBrowserRouter([
     {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
         children: [
             {index: true, element: <HomePage/>},
             {path: '/auth-callback', element: <AuthCallBackPage/>},
-            {path: '/user-profile', element: <div>User Profile Page</div>},
+            {path: '/user-profile', element: <UserProfilePage/>},
             {path: '/menu', element: <div>Menu Page</div>},
             {path: '/my-cart', element: <div>My Cart Page</div>},
         ]
