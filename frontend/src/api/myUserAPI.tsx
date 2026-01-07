@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
+//Create User
 type CreateUserRequest = {
   email: string;
   auth0Id: string;
@@ -43,3 +44,50 @@ export const useGetMyUser = () => {
     isPending};
 };
 
+//Update User
+type UpdateUserRequest = {
+  username?: string;
+  city?: string;
+  country?: string;
+  addressLine?: string;
+};
+
+export const useUpdateMyUser = () => {
+  const {getAccessTokenSilently} = useAuth0();
+
+  const updateMyUserRequest = async (formData: UpdateUserRequest) => {
+    const accessToken = await getAccessTokenSilently();
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update user");
+    }
+
+    return response.json();
+  };
+
+  const {mutateAsync: updateMyUser, 
+    isPending,
+    isError, 
+    isSuccess,
+    error,
+    reset} = useMutation({
+    mutationFn: updateMyUserRequest,
+  });
+
+  return {
+    updateMyUser,
+    isError, 
+    isSuccess,
+    isPending,
+    error,
+    reset
+  };
+};
