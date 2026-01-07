@@ -1,9 +1,10 @@
 import UserProfileForm from "@/forms/user-profile-forms/UserProfileForm"
+import { useUpdateMyUser } from "@/api/myUserAPI"
 
 const UserProfilePage = () => {
-    const handleSubmit = () => { console.log("hola") }
-    
-    return(<UserProfileForm onSubmit={handleSubmit} isLoading={false}/>)
+    const {updateMyUser,  isPending} = useUpdateMyUser();
+
+    return(<UserProfileForm onSubmit={updateMyUser} isLoading={isPending}/>)
 }
 
 export default UserProfilePage;
