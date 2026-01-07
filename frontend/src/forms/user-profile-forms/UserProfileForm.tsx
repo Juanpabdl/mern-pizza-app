@@ -11,7 +11,7 @@ const formSchema = z.object({
     username: z.string().min(1, "Name is required"),
     city: z.string().min(1, "City is required"),
     country: z.string().min(1, "Country is required"),
-    addressLine: z.string().min(5, "Address is required"),
+    addressLine: z.string().min(1, "Address is required"),
 });
 
 type UserFormData = z.infer<typeof formSchema>;
