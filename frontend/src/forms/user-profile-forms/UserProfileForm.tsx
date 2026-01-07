@@ -33,7 +33,7 @@ const UserProfileForm = ({onSubmit, isLoading}:Props) => {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} 
             className="space-y-4 bg-gray-50 rounded-lg p-5 md:p-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1 mb-4">
                     <h2 className="text-xl font-bold">User Profile Form</h2>
                     <FormDescription>
                         View and change your profile info. here!
