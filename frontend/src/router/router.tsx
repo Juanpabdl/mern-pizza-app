@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner";
 import Layout from "@/pages/Layout";
 import HomePage from "@/pages/HomePage";
 import Auth0ProviderWithNavigate from "@/auth/Auth0ProviderWithNavigate";
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
         element: (
             <Auth0ProviderWithNavigate>
                 <Layout/>
+                <Toaster visibleToasts={1} position="top-right" richColors/>
             </Auth0ProviderWithNavigate>
         ),
         children: [
