@@ -10,7 +10,7 @@ type CreateUserRequest = {
   auth0Id: string;
 };
 
-export const useGetMyUser = () => {
+export const useCreateMyUser = () => {
   const {getAccessTokenSilently} = useAuth0();
 
   const getMyUserRequest = async (user: CreateUserRequest) => {
