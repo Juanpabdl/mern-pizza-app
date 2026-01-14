@@ -5,6 +5,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LoadingButton from "@/components/LoadingButton";
+import type { User } from "@/types";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     email: z.email().optional(),
@@ -19,15 +21,20 @@ type UserFormData = z.infer<typeof formSchema>;
 type Props = {
     onSubmit: (data: UserFormData) => void;
     isLoading: boolean;
-
+    currentUser: User;
 };
 
-const UserProfileForm = ({onSubmit, isLoading}:Props) => {
+const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
     const form = useForm<UserFormData>({
         resolver: zodResolver(formSchema),
-        defaultValues: { username: '', city: '', country: '', addressLine: '' }
-
+        defaultValues: { username: '', city: '', country: '', addressLine: '' }, //currentUser
     });
+
+    useEffect(() => {
+        if(currentUser){
+            form.reset(); //form.reset(currentUser);
+        }
+    }, [currentUser, form]);
 
     return(
         <Form {...form}>
@@ -54,7 +61,7 @@ const UserProfileForm = ({onSubmit, isLoading}:Props) => {
                 name="username" 
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>User Name</FormLabel>
                         <FormControl>
                             <Input {...field} className="bg-white"/>
                         </FormControl>
@@ -68,7 +75,7 @@ const UserProfileForm = ({onSubmit, isLoading}:Props) => {
                     name="addressLine" 
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                            <FormLabel>Address</FormLabel>
+                            <FormLabel>Address Line</FormLabel>
                             <FormControl>
                                 <Input {...field} className="bg-white"/>
                             </FormControl>
