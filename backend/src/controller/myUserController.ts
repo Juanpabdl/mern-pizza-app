@@ -2,6 +2,21 @@ import type { Request, Response } from "express";
 import User from "../models/user.js";
 
 // apy/my/user
+const getUser = async (req: Request, res: Response) => {
+    try {
+        //1. Find the current user
+        const currentUser = await User.findOne({_id: req.userId});
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        //2. Respond with user data
+        res.status(200).json({ currentUser });
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        res.status(500).json({ message: "Internal server error", error });
+    }
+}
+
 const createUser = async (req: Request, res: Response) => {
     try {
         const { auth0Id, email, password, username, city, country, addressLine, phoneNumber } = req.body;
@@ -60,5 +75,6 @@ const updateUser = async (req: Request, res: Response) => {
 
 export default {
     createUser,
-    updateUser
+    updateUser,
+    getUser
 };
