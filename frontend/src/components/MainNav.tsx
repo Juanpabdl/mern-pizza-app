@@ -5,13 +5,13 @@ import { Button } from "./ui/button";
 const MainNav = () => {
     const {loginWithRedirect, isAuthenticated} = useAuth0();
     return (
-        <span className="flex space-x-2 items-center">
+        <div className="flex space-x-2 items-center">
             {isAuthenticated ? (
                 <UserMenu/>
             ) : (
                 <Button variant='ghost' className="text-lg font-bold text-orange-500" onClick={async ()=> await loginWithRedirect()}>Log In</Button>
             )}
-        </span>
+        </div>
     );
 }
 
