@@ -10,7 +10,7 @@ const MovileNavLinks = () => {
             <Link to="/user-profile" className="text-lg text-foreground font-bold hover:text-orange-400">User Profile</Link>
             <Link to="/menu" className="text-lg text-foreground font-bold hover:text-orange-400">Menu</Link>
             <Link to="/my-cart" className="text-lg text-foreground font-bold hover:text-orange-400">My Cart</Link>
-            <Button onClick={() => logout()} 
+            <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} 
             className="flex flex-1 font-bold bg-orange-500 hover:bg-gray-500">
                 Log Out
             </Button>
