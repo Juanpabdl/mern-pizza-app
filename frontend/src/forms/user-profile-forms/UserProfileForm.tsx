@@ -28,7 +28,7 @@ const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
     const [formKey, setFormKey] = useState<number>(0);
     const form = useForm<UserFormData>({
         resolver: zodResolver(formSchema),
-        defaultValues: { username: '', city: '', country: '', addressLine: '' }, //currentUser
+        defaultValues: currentUser || { username: '', city: '', country: '', addressLine: '' }, //currentUser
     });
 
     useEffect(() => {
