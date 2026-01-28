@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LoadingButton from "@/components/LoadingButton";
 import type { User } from "@/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
     email: z.email().optional(),
@@ -25,6 +25,7 @@ type Props = {
 };
 
 const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
+    const [formKey, setFormKey] = useState<number>(0);
     const form = useForm<UserFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: { username: '', city: '', country: '', addressLine: '' }, //currentUser
@@ -32,12 +33,13 @@ const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
 
     useEffect(() => {
         if(currentUser){
-            form.reset(); //form.reset(currentUser);
+            //form.reset(); //form.reset(currentUser);
+            setFormKey(prevKey => prevKey + 1);
         }
-    }, [currentUser, form]);
+    }, [currentUser]);
 
     return(
-        <Form {...form}>
+        <Form key={formKey} {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} 
             className="space-y-4 bg-gray-50 rounded-lg p-5 md:p-10">
                 <div className="space-y-1 mb-4">
