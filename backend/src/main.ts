@@ -3,6 +3,7 @@ import type { Response, Request } from "express";
 import cors from "cors";
 import 'dotenv/config';
 import mongoose from "mongoose";
+import {v2 as cloudinary} from "cloudinary";
 import myUserRoute from "./routes/myUserRoute.js";
 
 mongoose.connect(process.env.DB_CONNECTION_STRING as string || "", {})
@@ -10,6 +11,12 @@ mongoose.connect(process.env.DB_CONNECTION_STRING as string || "", {})
     console.log("Connected to database");})
   .catch((err) => {
     console.error("Error connecting to database:", err);});
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!,
+});
 
 const app = express();
 const PORT = process.env.PORT;
