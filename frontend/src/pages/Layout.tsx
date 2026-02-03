@@ -13,7 +13,7 @@ const Layout = () => {
         <div className="flex flex-col min-h-screen w-screen">
             <Header/>
             {!hideHero && <Hero/>}
-            <div className="mx-auto flex-1 py-10">
+            <div className="w-full mx-auto flex-1 py-10">
                 {/* Components go here */}
                 <Outlet/>
             </div>
