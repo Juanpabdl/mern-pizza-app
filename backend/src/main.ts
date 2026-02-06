@@ -5,6 +5,7 @@ import 'dotenv/config';
 import mongoose from "mongoose";
 import {v2 as cloudinary} from "cloudinary";
 import myUserRoute from "./routes/myUserRoute.js";
+import myMenuRoute from "./routes/myMenuRoute.js";
 
 mongoose.connect(process.env.DB_CONNECTION_STRING as string || "", {})
   .then(() => {
@@ -25,6 +26,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/my/user", myUserRoute)
+app.use("/api/my/menu", myMenuRoute)
 
 app.get("/health", (req: Request, res: Response) => {
   res.send({message: "API is healthy"});
