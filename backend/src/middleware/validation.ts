@@ -28,4 +28,21 @@ export const validateMyUserRequest = [
         .notEmpty()
         .withMessage('Address line must be a string'),
     handleValidationErrors
-]
+];
+
+export const validateMyMenuRequest = [
+    body('name')
+        .isString()
+        .notEmpty()
+        .withMessage('Name is required'),
+    body('price')
+        .isFloat({ gt: 0 })
+        .withMessage('Price must be a number greater than 0'),
+    body('category')
+        .isArray()
+        .withMessage('Category must be an array')
+        .not()
+        .isEmpty()
+        .withMessage('Category array cannot be empty'),
+    handleValidationErrors
+];
