@@ -1,6 +1,8 @@
 import express from "express";
 import multer from "multer";
 import myMenuController from "../controller/myMenuController.js";
+import { jwtCheck, jwtParse } from "../middleware/auth.js";
+import { validateMyMenuRequest } from "../middleware/validation.js";
 
 const router = express.Router();
 
@@ -18,6 +20,9 @@ router.get("/", (req, res) => {
 router.post(
     "/",
     upload.single("imageFile"), 
+    validateMyMenuRequest,
+    jwtCheck,
+    jwtParse,
     myMenuController.createMenuItem
 );
 
