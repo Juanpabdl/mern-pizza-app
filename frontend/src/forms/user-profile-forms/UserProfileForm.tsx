@@ -30,11 +30,19 @@ type Props = {
 const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
     const form = useForm<UserFormData>({
         resolver: zodResolver(formSchema),
-        defaultValues: currentUser || { username: '', city: '', country: '', addressLine: '' },
+        defaultValues: currentUser || { 
+            email: '', 
+            username: '', 
+            city: '', 
+            country: '', 
+            addressLine: '' 
+        },
     });
 
     useEffect(() => {
-        form.reset(currentUser);
+        if (currentUser) {
+            form.reset(currentUser);
+        }
     }, [currentUser, form]);
 
    return(
@@ -99,9 +107,9 @@ const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
             </div>
             <div>
                 <Field orientation="horizontal">
-                    {/*<Button variant="outline" onClick={() => form.reset(currentUser)}>
+                    <Button variant="outline" onClick={() => form.reset(currentUser)}>
                         Reset
-                    </Button>*/}
+                    </Button>
                     {isLoading ? (
                         <LoadingButton />
                     ) : (
