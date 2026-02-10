@@ -107,9 +107,6 @@ const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
             </div>
             <div>
                 <Field orientation="horizontal">
-                    <Button variant="outline" onClick={() => form.reset(currentUser)}>
-                        Reset
-                    </Button>
                     {isLoading ? (
                         <LoadingButton />
                     ) : (
