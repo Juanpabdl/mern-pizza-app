@@ -22,10 +22,7 @@ const UserMenu = () => {
                 </DropdownMenuItem>
                 <Separator/>
                 <DropdownMenuItem>
-                    <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} 
-                    className="flex flex-1 font-bold bg-orange-500">
-                        Log Out
-                    </Button>
+                    <Link to='/manage-restaurant' className="text-lg font-bold hover:text-orange-400">Manage Restaurant</Link>
                 </DropdownMenuItem>
                 <Separator/>
                 <DropdownMenuItem>
@@ -34,6 +31,13 @@ const UserMenu = () => {
                 <Separator/>
                 <DropdownMenuItem>
                     <Link to='/my-cart' className="text-lg font-bold hover:text-orange-400">My Cart</Link>
+                </DropdownMenuItem>
+                <Separator/>
+                <DropdownMenuItem>
+                    <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} 
+                    className="flex flex-1 font-bold bg-orange-500">
+                        Log Out
+                    </Button>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
