@@ -6,6 +6,7 @@ import Auth0ProviderWithNavigate from "@/auth/Auth0ProviderWithNavigate";
 import AuthCallBackPage from "@/pages/AuthCallbackPage";
 import UserProfilePage from "@/pages/UserProfilePage";
 import ProtectedRoute from "@/auth/ProtectedRoute";
+import ManageRestaurantPage from "@/pages/ManageRestaurantPage";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
                 children: [
                     // Protected routes go here
                     {path: '/user-profile', element: <UserProfilePage/>},
+                    {path: '/manage-restaurant', element: <ManageRestaurantPage/>}
                 ]
             },
             {path: '/menu', element: <div>Menu Page</div>},
