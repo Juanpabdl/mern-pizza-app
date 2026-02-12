@@ -8,6 +8,7 @@ const MovileNavLinks = () => {
     return (
         <div className="flex flex-col gap-4">
             <Link to="/user-profile" className="text-lg text-foreground font-bold hover:text-orange-400">User Profile</Link>
+            <Link to="/manage-restaurant" className="text-lg text-foreground font-bold hover:text-orange-400">Manage Restaurant</Link>
             <Link to="/menu" className="text-lg text-foreground font-bold hover:text-orange-400">Menu</Link>
             <Link to="/my-cart" className="text-lg text-foreground font-bold hover:text-orange-400">My Cart</Link>
             <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} 
