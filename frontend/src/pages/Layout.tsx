@@ -5,7 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 const Layout = () => {
     const location = useLocation();
-    const hideHeroRoutes = ['/user-profile']
+    const hideHeroRoutes = ['/user-profile','/manage-restaurant'];
 
     const hideHero = hideHeroRoutes.includes(location.pathname)
 
