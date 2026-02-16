@@ -68,7 +68,9 @@ const RestaurantMenuForm = ({onSave, isLoading} : Props) => {
         const formData = new FormData();
         formData.append("name", formDataJSON.name);
         formData.append("price", formDataJSON.price.toString());
-        formData.append("category", JSON.stringify(formDataJSON.category));
+        formDataJSON.category.forEach((cat, index) => {
+            formData.append(`category[${index}]`, cat);
+        });
         if (formDataJSON.imageFile) {
             formData.append("imageFile", formDataJSON.imageFile);
         }
