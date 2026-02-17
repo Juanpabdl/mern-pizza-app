@@ -18,9 +18,14 @@ const formSchema = z.object({
             return "Invalid dish name.";
         },
     }).min(1, "Dish name cannot be empty."),
-    price: z.number().min(1,{
-        message: "Price must be a positive number.",
-    }),
+    price: z.coerce.number<number>({
+        error: (issue) => {
+            if (issue.input === undefined) {
+                return "Price is required.";
+            }
+            return "Invalid price.";
+        }
+        }).positive("Price must be a positive number."),
     category: z.array(z.string(), {
         error: (issue) => {
             if (issue.input === undefined) {
