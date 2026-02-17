@@ -1,7 +1,10 @@
 import RestaurantMenuForm from "@/forms/manage-menu-form/RestaurantMenuForm"
+import { useCreateMyMenu } from "@/api/myMenuAPI";
 
 const ManageRestaurantPage = () => {
-    return <RestaurantMenuForm onSave={() => console.log("Form saved!")} isLoading={false} />
+    const  {createMenu, isPending} = useCreateMyMenu();
+    
+    return <RestaurantMenuForm onSave={createMenu} isLoading={isPending} />
 }
 
 export default ManageRestaurantPage;
