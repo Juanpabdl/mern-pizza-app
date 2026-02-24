@@ -1,9 +1,12 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { Field, FieldDescription, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const ImageSection = () => {
-    const { control } = useFormContext();
+    const { control, watch } = useFormContext();
+
+    const existingImageUrl = watch('imageUrl');
 
     return (
         <div className="space-y-2">
@@ -14,7 +17,14 @@ const ImageSection = () => {
                     This will be displayed on the menu to help customers identify the dish.
                 </FieldDescription>
                 
-                <div className="flex flex-col gap-8 w-1/2">
+                <div className="flex flex-col gap-8 md:w-1/2">
+                {existingImageUrl && (
+                    <AspectRatio ratio={16/9} className="w-full">
+                        <img src={existingImageUrl} 
+                        alt="Current Dish Image" 
+                        className="rounded-md object-cover h-full w-full" />
+                    </AspectRatio>
+                )}
                     <Controller
                     name='imageFile'
                     control={control}
