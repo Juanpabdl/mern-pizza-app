@@ -1,10 +1,19 @@
 import RestaurantMenuForm from "@/forms/manage-menu-form/RestaurantMenuForm"
-import { useCreateMyMenu } from "@/api/myMenuAPI";
+import { useCreateMyMenu, useGetMyMenu } from "@/api/myMenuAPI";
 
 const ManageRestaurantPage = () => {
-    const  {createMenu, isPending} = useCreateMyMenu();
+    const  {createMenu, isPending: isCreateLoading} = useCreateMyMenu();
+    const {menuItems, isPending: isMenuLoading} = useGetMyMenu();
+
+    if(isMenuLoading){
+        return <div>Loading menu items...</div>
+    }
+
+    if(!menuItems || menuItems.length === 0){
+        return <div>No menu items found. Please add some dishes to your menu.</div>
+    }
     
-    return <RestaurantMenuForm onSave={createMenu} isLoading={isPending} />
+    return <RestaurantMenuForm onSave={createMenu} isLoading={isCreateLoading} menuItem={menuItems[0]} />;
 }
 
 export default ManageRestaurantPage;

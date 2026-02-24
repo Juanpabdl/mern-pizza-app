@@ -1,7 +1,7 @@
 const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 import type { MenuItem } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useCreateMyMenu = () => {
@@ -48,3 +48,33 @@ export const useCreateMyMenu = () => {
         error
     };
 };
+
+export const useGetMyMenu = () => {
+    const {getAccessTokenSilently} = useAuth0();
+
+    const getMyMenuRequest = async (): Promise<MenuItem[]> => {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch(`${API_BASE_URL}/api/my/menu`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        
+        if (!response.ok) {
+            throw new Error("Failed to get menu items");
+        }
+
+        return response.json();
+    };
+
+    const {
+        data: menuItems,
+        isPending,
+    } = useQuery({
+        queryKey: ["fetchMyMenu"],
+        queryFn: getMyMenuRequest,
+    });
+
+    return { menuItems, isPending };
+}
