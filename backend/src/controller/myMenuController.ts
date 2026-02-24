@@ -3,6 +3,19 @@ import Menu from '../models/menu.js';
 import { v2 as cloudinary } from 'cloudinary';
 
 //api/my/menu
+const getMyMenuItems = async (req: Request, res: Response) => {
+    try {
+        const menuItems = await Menu.find();
+        if (!menuItems || menuItems.length === 0) {
+            return res.status(404).json({ message: 'No menu items found.' });
+        }
+        return res.status(200).json(menuItems);
+    } catch (error) {
+        console.error('Error fetching menu items:', error);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
+};
+
 const createMenuItem = async (req: Request, res: Response) => {
     try {
         //1. Check if menu item with the same name already exists
@@ -36,4 +49,5 @@ const createMenuItem = async (req: Request, res: Response) => {
 
 export default {
     createMenuItem,
+    getMyMenuItems
 };

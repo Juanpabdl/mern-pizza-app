@@ -13,9 +13,12 @@ const upload = multer({
 });
 
 //api/my/menu
-router.get("/", (req, res) => {
-    res.send("myMenuRoute works!");
-});
+router.get(
+    "/", 
+    jwtCheck,
+    jwtParse,
+    myMenuController.getMyMenuItems
+);
 
 router.post(
     "/",
