@@ -2,13 +2,17 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet, Navigate } from "react-router";
 
 const ProtectedRoute = () => {
-    const { isAuthenticated } = useAuth0();
+    const { isAuthenticated, isLoading } = useAuth0();
 
-    return isAuthenticated ? (
-        <Outlet />
-    ) : (
-        <Navigate to='/' replace/>
-    );
+    if(isLoading){
+        return null;
+    }
+
+    if(isAuthenticated){
+        return <Outlet />
+    }
+
+    return <Navigate to='/' replace/>
 }
 
 export default ProtectedRoute;
