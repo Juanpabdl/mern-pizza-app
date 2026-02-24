@@ -8,6 +8,8 @@ import DetailSection from "./DetailSection";
 import { Separator } from "@/components/ui/separator";
 import MenuCategorySection from "./MenuCategorySection";
 import ImageSection from "./ImageSection";
+import type { MenuItem } from "@/types";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     name: z.string({
@@ -55,18 +57,34 @@ type menuFormData = z.infer<typeof formSchema>;
 type Props = {
     onSave: (formData: FormData) => void;
     isLoading: boolean;
+    menuItem: MenuItem;
 }
 
-const RestaurantMenuForm = ({onSave, isLoading} : Props) => {
+const RestaurantMenuForm = ({onSave, isLoading, menuItem} : Props) => {
     const form = useForm<menuFormData>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
+        defaultValues: menuItem ? menuItem : {
             name: "",
             price: 0.00,
             category: [],
             imageFile: undefined
         }
     });
+
+    useEffect(() => {
+        if(!menuItem){
+            return
+        }
+
+        const deliveryPriceFormated = parseInt(menuItem.price.toString());
+        const categoriesFormated = menuItem.category.map(cat => cat.toString());
+        const updatedMenuItem = {...menuItem,
+            price: deliveryPriceFormated,
+            category: categoriesFormated
+        }
+
+        form.reset({...updatedMenuItem});
+    }, [menuItem, form]);
 
     const onSubmit = (formDataJSON: menuFormData) => {
         //TODO: Convert formDataJSON to a new FormData object and call the onSave prop with it
