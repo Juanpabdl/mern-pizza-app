@@ -29,4 +29,13 @@ router.post(
     myMenuController.createMenuItem
 );
 
+router.put(
+    "/",
+    upload.single("imageFile"), 
+    validateMyMenuRequest,
+    jwtCheck,
+    jwtParse,
+    myMenuController.updateMenuItem
+)
+
 export default router;
