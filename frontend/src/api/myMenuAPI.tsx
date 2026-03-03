@@ -78,3 +78,48 @@ export const useGetMyMenu = () => {
 
     return { menuItems, isPending };
 }
+
+export const useUpdateMyMenu = () => {
+    const {getAccessTokenSilently} = useAuth0();
+
+    const updateMyMenuRequest = async (menuFormData: FormData): Promise<MenuItem> => {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch(`${API_BASE_URL}/api/my/menu`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: menuFormData,
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update menu item");
+        }
+
+        return response.json();
+    };
+
+    const {
+        mutateAsync: updateMenu, 
+        isPending,
+        error, 
+        isSuccess
+    } = useMutation({
+        mutationFn: updateMyMenuRequest,
+    });
+
+    if(isSuccess){
+        toast.success("Menu item updated successfully!");
+    }
+
+    if(error){
+        toast.error("Failed to update menu item. Please try again.");
+    }
+
+    return {
+        updateMenu,  
+        isSuccess,
+        isPending,
+        error
+    };
+};
