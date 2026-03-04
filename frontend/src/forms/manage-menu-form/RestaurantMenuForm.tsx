@@ -39,6 +39,7 @@ const formSchema = z.object({
             return "Invalid categories.";
         }
     }).nonempty("At least one category is required."),
+    imageUrl: z.string().optional(),
     imageFile: z.instanceof(File, {
         error: (issue) => {
             if (issue.input === undefined) {
@@ -50,6 +51,9 @@ const formSchema = z.object({
             return "Invalid image.";
         }
     })
+}).refine((data) => data.imageUrl || data.imageFile, {
+    message: "Either an image URL or an image file must be provided.",
+    path: ["imageFile"], // This will attach the error to the imageFile field
 });
 
 type menuFormData = z.infer<typeof formSchema>;
@@ -89,6 +93,7 @@ const RestaurantMenuForm = ({onSave, isLoading, menuItem} : Props) => {
     const onSubmit = (formDataJSON: menuFormData) => {
         //TODO: Convert formDataJSON to a new FormData object and call the onSave prop with it
         const formData = new FormData();
+        formData.append('id', menuItem._id);
         formData.append("name", formDataJSON.name);
         formData.append("price", formDataJSON.price.toString());
         formDataJSON.category.forEach((cat, index) => {
