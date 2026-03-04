@@ -4,11 +4,7 @@ import ManageMenuList from "@/components/ManageMenuList";
 
 const ManageRestaurantPage = () => {
     const  {createMenu, isPending: isCreateLoading} = useCreateMyMenu();
-    const {menuItems, isPending: isMenuLoading} = useGetMyMenu();
-
-    if(isMenuLoading){
-        return <div>Loading menu items...</div>
-    }
+    const {menuItems} = useGetMyMenu();
 
     if(!menuItems || menuItems.length === 0){
         return <div>No menu items found. Please add some dishes to your menu.</div>
