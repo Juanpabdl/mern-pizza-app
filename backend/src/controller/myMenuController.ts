@@ -45,7 +45,7 @@ const updateMenuItem = async (req: Request, res: Response) => {
     try {
         //const { id, name, price } = req.body;
         const menuItem = await Menu.findById(req.body.id);
-        console.log("Updating menu item with ID:", req.body.id);
+        
         if (!menuItem) {
             return res.status(404).json({ message: 'Menu item not found.' });
         }
