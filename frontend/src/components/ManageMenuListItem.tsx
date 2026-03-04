@@ -2,12 +2,20 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "./ui/button";
 import type { MenuItem } from "@/types";
 import { Delete, Edit } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     menuItem: MenuItem;
     key: string;
 }
+
 const ManageMenuListItem = ({key, menuItem}: Props) => {
+    const navigate = useNavigate();
+
+     const handleUpdate = () => {
+        navigate(`/update-menu/${menuItem._id}`, {state: {menuItem}});
+     }
+
     return (
         <div key={key} className="grid grid-cols-1 md:grid-cols-3 items-center px-3 gap-4 md:gap-6 bg-white rounded-md shadow-md">
             <AspectRatio ratio={1/1} className="w-full">
@@ -20,7 +28,8 @@ const ManageMenuListItem = ({key, menuItem}: Props) => {
                 <p className="text-lg font-semibold">${menuItem.price}</p>
             </div> 
             <div className="space-y-5 space-x-3">
-                <Button className="bg-orange-500">
+                <Button className="bg-orange-500"
+                onClick={handleUpdate}>
                     <Edit className="mr-1 h-4 w-4" />
                     Edit
                 </Button>
