@@ -84,6 +84,13 @@ export const useUpdateMyMenu = () => {
 
     const updateMyMenuRequest = async (menuFormData: FormData): Promise<MenuItem> => {
         const accessToken = await getAccessTokenSilently();
+
+        const id = menuFormData.get("id");
+        
+        if (!id) {
+            throw new Error("Menu item ID is required for update");
+        }
+        
         const response = await fetch(`${API_BASE_URL}/api/my/menu`, {
             method: "PUT",
             headers: {
