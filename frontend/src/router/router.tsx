@@ -7,6 +7,7 @@ import AuthCallBackPage from "@/pages/AuthCallbackPage";
 import UserProfilePage from "@/pages/UserProfilePage";
 import ProtectedRoute from "@/auth/ProtectedRoute";
 import ManageRestaurantPage from "@/pages/ManageRestaurantPage";
+import UpdateMenuPage from "@/pages/UpdateMenuPage";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
                 children: [
                     // Protected routes go here
                     {path: '/user-profile', element: <UserProfilePage/>},
-                    {path: '/manage-restaurant', element: <ManageRestaurantPage/>}
+                    {path: '/manage-restaurant', element: <ManageRestaurantPage/>},
+                    {path:'/update-menu/:id', element: <UpdateMenuPage/>}
                 ]
             },
             {path: '/menu', element: <div>Menu Page</div>},
