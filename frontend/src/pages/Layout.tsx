@@ -5,9 +5,11 @@ import { Outlet, useLocation } from "react-router-dom";
 
 const Layout = () => {
     const location = useLocation();
-    const hideHeroRoutes = ['/user-profile','/manage-restaurant'];
 
-    const hideHero = hideHeroRoutes.includes(location.pathname)
+    const hideHero = 
+        location.pathname === '/user-profile' ||
+        location.pathname === '/manage-restaurant' ||
+        /^\/update-menu\/\d+/.test(location.pathname);
 
     return(
         <div className="flex flex-col min-h-screen w-screen">
