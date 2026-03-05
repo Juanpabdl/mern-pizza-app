@@ -50,7 +50,7 @@ const formSchema = z.object({
             }
             return "Invalid image.";
         }
-    })
+    }).optional()
 }).refine((data) => data.imageUrl || data.imageFile, {
     message: "Either an image URL or an image file must be provided.",
     path: ["imageFile"], // This will attach the error to the imageFile field
