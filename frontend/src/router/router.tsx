@@ -8,6 +8,7 @@ import UserProfilePage from "@/pages/UserProfilePage";
 import ProtectedRoute from "@/auth/ProtectedRoute";
 import ManageRestaurantPage from "@/pages/ManageRestaurantPage";
 import UpdateMenuPage from "@/pages/UpdateMenuPage";
+import ClientMenuPage from "@/pages/ClientMenuPage";
 
 const router = createBrowserRouter([
     {
@@ -27,10 +28,10 @@ const router = createBrowserRouter([
                     // Protected routes go here
                     {path: '/user-profile', element: <UserProfilePage/>},
                     {path: '/manage-restaurant', element: <ManageRestaurantPage/>},
-                    {path:'/update-menu/:id', element: <UpdateMenuPage/>}
+                    {path: '/update-menu/:id', element: <UpdateMenuPage/>},
+                    {path: '/menu', element: <ClientMenuPage/>}
                 ]
             },
-            {path: '/menu', element: <div>Menu Page</div>},
             {path: '/my-cart', element: <div>My Cart Page</div>},
         ]
     },
