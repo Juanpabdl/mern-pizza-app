@@ -6,7 +6,7 @@ type CategorySelectorProps = {
 };
 
 const CategorySelector = ({ selectedCategory, handleSelect }: CategorySelectorProps) => {
-    const categories = ["All", "Pizza", "Pasta", "Salads", "Desserts", "Drinks", "Sides", "Specials"];
+    const categories = ["Pizza", "Pasta", "Salads", "Desserts", "Drinks", "Sides", "Specials"];
 
     return(
         <div className="space-y-3 text-center">
