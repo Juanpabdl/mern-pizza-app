@@ -27,7 +27,6 @@ const ClientMenuDisplay = ({ category }: Props) => {
 
     return (
         <div className="space-y-4">
-            <h2 className="text-xl font-semibold">{category}</h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {filteredList.map((item) => (
                     <ClientMenuItemCard key={item._id} item={item} />
