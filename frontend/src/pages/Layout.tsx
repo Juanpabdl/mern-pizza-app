@@ -9,6 +9,7 @@ const Layout = () => {
     const hideHero = 
         location.pathname === '/user-profile' ||
         location.pathname === '/manage-restaurant' ||
+        location.pathname === '/menu' ||
         /^\/update-menu\/\d+/.test(location.pathname);
 
     return(
