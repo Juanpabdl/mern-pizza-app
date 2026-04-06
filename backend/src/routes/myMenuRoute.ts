@@ -38,4 +38,12 @@ router.put(
     myMenuController.updateMenuItem
 )
 
+//api/my/menu/:id
+router.get(
+    "/:id",
+    jwtCheck,
+    jwtParse,
+    myMenuController.getMenuItemById
+);
+
 export default router;
