@@ -80,8 +80,23 @@ const uploadImage = async (file: Express.Multer.File) => {
     return uploadResponse.secure_url;
 };
 
+//api/my/menu/:id
+const getMenuItemById = async (req: Request, res: Response) => {
+    try {
+        const menuItem = await Menu.findById(req.params.id);
+        if (!menuItem) {
+            return res.status(404).json({ message: 'Menu item not found.' });
+        }
+        return res.status(200).json(menuItem);
+    } catch (error) {
+        console.error('Error fetching menu item:', error);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
+};
+
 export default {
     createMenuItem,
     getMyMenuItems,
-    updateMenuItem
+    updateMenuItem,
+    getMenuItemById
 };

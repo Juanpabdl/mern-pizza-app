@@ -130,3 +130,31 @@ export const useUpdateMyMenu = () => {
         error
     };
 };
+
+export const useGetMenuItem = (id: string) => {
+    const {getAccessTokenSilently} = useAuth0();
+
+    const getMenuItemByIdRequest = async (): Promise<MenuItem> => {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch(`${API_BASE_URL}/api/my/menu/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Failed to get menu item");
+        }
+        return response.json();
+    };
+
+    const {
+        data: menuItem,
+        isPending,
+    } = useQuery({
+        queryKey: ["fetchMenuItemById", id],
+        queryFn: getMenuItemByIdRequest,
+    });
+
+    return { menuItem, isPending };
+};
