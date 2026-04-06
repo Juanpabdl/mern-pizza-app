@@ -23,7 +23,10 @@ const ClientMenuItemCard = ({ item }: Props) => {
                 Categories: {item.category.join(", ")}
             </p>
             <div className="flex justify-end">
-                <Button variant="outline" size="sm" className="mt-4 bg-orange-500 text-white hover:bg-orange-600 rounded-full">
+                <Button 
+                variant="outline" 
+                size="sm" 
+                className="mt-4 bg-orange-500 text-white hover:bg-orange-600 rounded-full">
                     <Cross className="h-5 w-5"/>
                     Agregar
                 </Button>
