@@ -154,6 +154,7 @@ export const useGetMenuItem = (id: string) => {
     } = useQuery({
         queryKey: ["fetchMenuItemById", id],
         queryFn: getMenuItemByIdRequest,
+        enabled: !!id // Only run the query if id is provided
     });
 
     return { menuItem, isPending };
