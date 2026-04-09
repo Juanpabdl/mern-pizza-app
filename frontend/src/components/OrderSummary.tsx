@@ -20,7 +20,7 @@ const OrderSummary = ({cartItems}: Props) => {
             <CardHeader>
                 <CardTitle className="text-lg font-bold tracking-tight flex justify-between items-center">
                     <div className="text-orange-500 flex items-center space-x-3">
-                        <h2 className="text-2xl font-bold">Order</h2>
+                        <h2 className="text-2xl font-bold">Your Order</h2>
                         <ShoppingCart className="w-5 h-5"/>
                     </div>
                     <span>${getTotalPrice().toFixed(2)}</span>
@@ -59,7 +59,6 @@ const OrderSummary = ({cartItems}: Props) => {
                     <span>Delivery:</span>
                     <span>${(getTotalPrice() + 10).toFixed(2)}</span>
                 </div>
-                <Separator/>
             </CardHeader>
         </>
     )
