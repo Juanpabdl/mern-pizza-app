@@ -2,7 +2,8 @@ import type { MenuItem } from "@/types";
 import { Button } from "./ui/button";
 import { Cross } from "lucide-react";
 import { useGetMenuItem } from "@/api/myMenuAPI";
-import { Card, CardDescription, CardFooter, CardTitle } from "./ui/card";
+import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";
+import { useCart } from "@/utils/CartContext/CartContextProvider";
 
 type Props = {
   item: MenuItem;
@@ -10,10 +11,13 @@ type Props = {
 
 const ClientMenuItemCard = ({ item }: Props) => {
   const  {menuItem} = useGetMenuItem(item._id);
+  const { addToCart } = useCart();
 
-  const addToCart = () => {
+  const handleAdd = () => {
     // Implement add to cart functionality here
-    console.log(`Adding ${menuItem?.name || item.name} to cart`);
+    if(menuItem){
+      addToCart(menuItem);
+    }
   };
 
   return (
@@ -22,29 +26,30 @@ const ClientMenuItemCard = ({ item }: Props) => {
         <img
         src={item.imageUrl}
         alt={item.name}
-        className="max-h-40 w-full aspect-square object-cover rounded-t-md mb-1 mt-0"/>
+        className="max-h-40 w-full object-cover rounded-t-md mb-1 mt-0"/>
       )}
-        <div className="px-4 pb-4 space-y-2">
+        <div className="px-4 space-y-2">
           <CardTitle>
             {item.name}
           </CardTitle>
-          <CardDescription>
+          <CardContent>
             <p className="text-sm text-gray-600">${item.price.toFixed(2)}</p>
             <p className="text-xs text-gray-500 mt-2">
-                Categories: {item.category.join(", ")}
+              {item.category.join(", ")}
             </p>
-          </CardDescription>
-        </div>
-        <CardFooter className="w-full flex justify-end align-middle pb-3 px-3">
+          </CardContent>
+          <CardFooter className="w-full flex justify-end align-bottom pb-3 px-3 mb-0">
             <Button 
             variant="outline" 
             size="sm" 
             className="mt-4 bg-orange-500 text-white hover:bg-orange-600 rounded-full"
-            onClick={addToCart}>
+            onClick={handleAdd}>
                 <Cross className="h-5 w-5"/>
                 Agregar
             </Button>
-        </CardFooter>
+          </CardFooter>
+        </div>
+        
     </Card>
   );
 };
