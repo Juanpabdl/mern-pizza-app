@@ -1,10 +1,11 @@
 import CategorySelector from "@/components/CategorySelector";
 import ClientMenuDisplay from "@/components/ClientMenuDisplay";
 import OrderSummary from "@/components/OrderSummary";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useCallback, useState } from "react";
 import { useCart } from "@/utils/CartContext/CartContextProvider";
+import CheckoutButton from "@/components/CheckoutButton";
 
 const ClientMenuPage = () => {
     const { cartItems } = useCart();
@@ -38,6 +39,9 @@ const ClientMenuPage = () => {
                     {/* Display items added into the cart */}
                     <Card>
                         <OrderSummary cartItems={cartItems}/>
+                        <CardFooter>
+                            <CheckoutButton/>
+                        </CardFooter>
                     </Card>
                 </div>
             </div>          
