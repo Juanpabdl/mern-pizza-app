@@ -30,12 +30,12 @@ const ClientMenuPage = () => {
                     selectedCategory={selectedCategory} 
                     handleSelect={handleSelect}/>
                     <Separator/>
-                    {/* You can display the menu items here using the `menuItems` variable */}
                     {/* Display menu items here */}
                     <ClientMenuDisplay category={selectedCategory}/>
                     <Separator/>
                 </div>
                 <div className="space-y-2">
+                    {/* Display items added into the cart */}
                     <Card>
                         <OrderSummary cartItems={cartItems}/>
                     </Card>
