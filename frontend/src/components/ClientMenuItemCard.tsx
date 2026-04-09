@@ -14,7 +14,6 @@ const ClientMenuItemCard = ({ item }: Props) => {
   const { addToCart } = useCart();
 
   const handleAdd = () => {
-    // Implement add to cart functionality here
     if(menuItem){
       addToCart(menuItem);
     }

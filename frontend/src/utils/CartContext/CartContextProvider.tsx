@@ -13,8 +13,8 @@ export type CartItem = {
 
 interface CartContextType{
     cartItems: CartItem[],
-    //setCartItems: Dispatch<SetStateAction<CartItem[]>>,
     addToCart: (newItem: MenuItem) => void,
+    removeFromCart: (cartItem: CartItem) => void,
 }
 
 const CartContext = createContext<CartContextType|null>(null)
@@ -49,7 +49,17 @@ export const CartProvider = ({children}:React.PropsWithChildren) => {
             })
         },[cartItems]);
 
-    return (<CartContext.Provider value={{cartItems,addToCart}}>
+    const removeFromCart = (cartItem: CartItem) => {
+        setCartItems((prevCartItems) => {
+            const updatedCartItems = prevCartItems.filter(
+                (item)=> item._id !== cartItem._id
+            );
+
+            return updatedCartItems;
+        })
+    }
+
+    return (<CartContext.Provider value={{cartItems,addToCart,removeFromCart}}>
         {children}
     </CartContext.Provider>)
 };
