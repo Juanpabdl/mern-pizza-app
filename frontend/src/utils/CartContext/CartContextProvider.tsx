@@ -20,7 +20,10 @@ interface CartContextType{
 const CartContext = createContext<CartContextType|null>(null)
 
 export const CartProvider = ({children}:React.PropsWithChildren) => {
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+        const storedCartItems = sessionStorage.getItem('cartItems');
+        return storedCartItems ? JSON.parse(storedCartItems) : [];
+    });
 
     const addToCart = useCallback((menuItem:MenuItem) => {
             setCartItems((prevCartItems) => {
@@ -45,6 +48,12 @@ export const CartProvider = ({children}:React.PropsWithChildren) => {
                         }
                     ];
                 }
+                
+                sessionStorage.setItem(
+                    `cartItems`,
+                    JSON.stringify(updatedCartItems)
+                );
+
                 return updatedCartItems;
             })
         },[cartItems]);
@@ -53,6 +62,11 @@ export const CartProvider = ({children}:React.PropsWithChildren) => {
         setCartItems((prevCartItems) => {
             const updatedCartItems = prevCartItems.filter(
                 (item)=> item._id !== cartItem._id
+            );
+
+            sessionStorage.setItem(
+                `cartItems`,
+                JSON.stringify(updatedCartItems)
             );
 
             return updatedCartItems;
