@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { useCallback, useState } from "react";
 import { useCart } from "@/utils/CartContext/CartContextProvider";
 import CheckoutButton from "@/components/CheckoutButton";
+import type { UserFormData } from "@/forms/user-profile-forms/UserProfileForm";
 
 const ClientMenuPage = () => {
     const { cartItems } = useCart();
@@ -14,6 +15,10 @@ const ClientMenuPage = () => {
     const handleSelect = useCallback((category:string) => {
         setSelectedCategory(category)
     },[selectedCategory])
+
+    const onCheckout = (userFormData:UserFormData) => {
+        console.log("UserFormData",userFormData)
+    }
 
     return (
         <div className="flex flex-col justify-center mx-auto">
@@ -40,7 +45,9 @@ const ClientMenuPage = () => {
                     <Card>
                         <OrderSummary cartItems={cartItems}/>
                         <CardFooter>
-                            <CheckoutButton/>
+                            <CheckoutButton
+                            disabled={cartItems.length === 0}
+                            onCheckout={onCheckout}/>
                         </CardFooter>
                     </Card>
                 </div>
