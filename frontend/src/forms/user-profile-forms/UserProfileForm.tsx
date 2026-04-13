@@ -7,6 +7,7 @@ import LoadingButton from "@/components/LoadingButton";
 import type { User } from "@/types";
 import { useEffect } from "react";
 import { Field, 
+        FieldDescription, 
         FieldError, 
         FieldGroup, 
         FieldLabel } from "@/components/ui/field";
@@ -19,15 +20,23 @@ const formSchema = z.object({
     addressLine: z.string().min(1, "Address is required"),
 });
 
-type UserFormData = z.infer<typeof formSchema>;
+export type UserFormData = z.infer<typeof formSchema>;
 
 type Props = {
     onSubmit: (data: UserFormData) => void;
     isLoading: boolean;
     currentUser: User;
+    title?: string;
+    buttonText?: string;
 };
 
-const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
+const UserProfileForm = ({
+    onSubmit, 
+    isLoading, 
+    currentUser, 
+    title="User Profile",
+    buttonText="Submit"
+}:Props) => {
     const form = useForm<UserFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: currentUser || { 
@@ -48,6 +57,10 @@ const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
    return(
     <form id={`user-profile-form-${currentUser?._id}`} {...form} onSubmit={form.handleSubmit(onSubmit)}
     className="w-full max-w-[700px] mx-auto space-y-4 bg-gray-50 rounded-lg p-5 md:p-10">
+        <div>
+            <h2 className="text-2xl font-semibold">{title}</h2>
+            <FieldDescription>View & change your user info.</FieldDescription>
+        </div>
         <FieldGroup>
             <Controller 
             name="email"
@@ -111,7 +124,7 @@ const UserProfileForm = ({onSubmit, isLoading, currentUser}:Props) => {
                         <LoadingButton />
                     ) : (
                         <Button type="submit" className="bg-orange-500">
-                            Submit
+                            {buttonText}
                         </Button>
                     )}
                 </Field>
