@@ -1,6 +1,6 @@
 import type { CartItem } from "@/utils/CartContext/CartContextProvider";
 import { CardContent, CardHeader, CardTitle } from "./ui/card";
-import { ShoppingCart, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
 import { useCart } from "@/utils/CartContext/CartContextProvider";
@@ -21,7 +21,6 @@ const OrderSummary = ({cartItems}: Props) => {
                 <CardTitle className="text-lg font-bold tracking-tight flex justify-between items-center">
                     <div className="text-orange-500 flex items-center space-x-3">
                         <h2 className="text-2xl font-bold">Your Order</h2>
-                        <ShoppingCart className="w-5 h-5"/>
                     </div>
                     <span>${getTotalPrice().toFixed(2)}</span>
                 </CardTitle>
