@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import {v2 as cloudinary} from "cloudinary";
 import myUserRoute from "./routes/myUserRoute.js";
 import myMenuRoute from "./routes/myMenuRoute.js";
+import orderRoute from "./routes/OrderRoute.js";
 
 mongoose.connect(process.env.DB_CONNECTION_STRING as string || "", {})
   .then(() => {
@@ -27,6 +28,7 @@ app.use(express.json());
 
 app.use("/api/my/user", myUserRoute)
 app.use("/api/my/menu", myMenuRoute)
+app.use("/api/order", orderRoute)
 
 app.get("/health", (req: Request, res: Response) => {
   res.send({message: "API is healthy"});
