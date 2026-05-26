@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {type InferSchemaType} from "mongoose";
 
 const menuSchema = new mongoose.Schema({
     _id: { 
@@ -18,5 +18,14 @@ const menuSchema = new mongoose.Schema({
 });
 
 const Menu = mongoose.model("Menu", menuSchema);
+
+const cartItemSchema = new mongoose.Schema({
+    menuItemId: { type: String, ref: "Menu", required: true },
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    quantity: { type: Number, required: true }
+});
+
+export type CartItemType = InferSchemaType<typeof cartItemSchema>;
 
 export default Menu;
