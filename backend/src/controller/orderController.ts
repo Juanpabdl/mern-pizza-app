@@ -39,7 +39,7 @@ const createCheckoutSession = async (req: Request, res: Response) => {
         if(!session.url) {
             return res.status(500).json({ message: "Failed to create checkout session" });
         }
-
+        
         //3. Respond with the session URL
         res.status(200).json({ url: session.url });
     } catch (error: any) {
