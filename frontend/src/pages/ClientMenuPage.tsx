@@ -7,17 +7,40 @@ import { useCallback, useState } from "react";
 import { useCart } from "@/utils/CartContext/CartContextProvider";
 import CheckoutButton from "@/components/CheckoutButton";
 import type { UserFormData } from "@/forms/user-profile-forms/UserProfileForm";
+import { useCreateCheckoutSession } from "@/api/orderAPI";
 
 const ClientMenuPage = () => {
     const { cartItems } = useCart();
     const [selectedCategory, setSelectedCategory] = useState<string>("Pizza");
+    const {createCheckoutSession, isPending: isCheckoutPending} = useCreateCheckoutSession();
 
     const handleSelect = useCallback((category:string) => {
         setSelectedCategory(category)
     },[selectedCategory])
 
-    const onCheckout = (userFormData:UserFormData) => {
-        console.log("UserFormData",userFormData)
+    const onCheckout = async (userFormData:UserFormData) => {
+        const checkoutData = {
+            cartItems: cartItems.map(item => ({
+                menuItemId: item._id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity.toString() // Convert quantity to string if needed by the backend
+            })),    
+            deliveryDetails: {
+                email: userFormData?.email || "",
+                username: userFormData.username,
+                addressLine: userFormData.addressLine,
+                city: userFormData.city,
+                country: userFormData.country
+            }
+        }
+
+        const data = await createCheckoutSession(checkoutData)
+        
+        if (data) {
+            window.location.href = data.url; // Redirect to the checkout session URL
+        }
+
     }
 
     return (
@@ -47,7 +70,8 @@ const ClientMenuPage = () => {
                         <CardFooter>
                             <CheckoutButton
                             disabled={cartItems.length === 0}
-                            onCheckout={onCheckout}/>
+                            onCheckout={onCheckout}
+                            isLoading={isCheckoutPending} />
                         </CardFooter>
                     </Card>
                 </div>
