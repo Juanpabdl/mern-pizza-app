@@ -10,7 +10,7 @@ type CheckoutSessionRequest = {
         menuItemId: string;
         name: string;
         price: number;
-        quantity: number;
+        quantity: string;
     }[];
     deliveryDetails: {
         email: string;

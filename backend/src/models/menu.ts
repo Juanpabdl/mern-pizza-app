@@ -23,7 +23,7 @@ const cartItemSchema = new mongoose.Schema({
     menuItemId: { type: String, ref: "Menu", required: true },
     name: { type: String, required: true },
     price: { type: Number, required: true },
-    quantity: { type: Number, required: true }
+    quantity: { type: String, required: true }
 });
 
 export type CartItemType = InferSchemaType<typeof cartItemSchema>;
