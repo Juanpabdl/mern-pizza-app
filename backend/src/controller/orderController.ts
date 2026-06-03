@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import Stripe from "stripe";
 import type { CartItemType } from "../models/menu.js";
+import Order from "../models/order.js";
 
 const STRIPE =  new Stripe(process.env.STRIPE_API_KEY! as string);
 const FRONTEND_URL = process.env.FRONTEND_URL! as string;
@@ -30,17 +31,29 @@ const createCheckoutSession = async (req: Request, res: Response) => {
         if (!cartItems || cartItems.length === 0) {
             return res.status(400).json({ message: "Cart is empty" });
         }
-        //1. Create line items for Stripe checkout
+
+        const newOrder = new Order({
+                user: req.userId,
+                status: "placed",
+                 deliveryDetails: checkoutSessionRequest.deliveryDetails,
+                items: cartItems.map(item => ({
+                    menuItemId: item.menuItemId,
+                    name: item.name,
+                    quantity: parseInt(item.quantity),
+                })),
+                //totalAmount: cartItems.reduce((total, item) => total + item.price * parseInt(item.quantity), 0),
+                createdAt: new Date(),
+        });
+
         const lineItems = createLineItems(cartItems);
 
-        //2. Create a checkout session
-        const session = await createSession(lineItems, "TEST_ORDER_ID"); // You can replace "TEST_ORDER_ID" with the actual order ID when you have it
+        const session = await createSession(lineItems, newOrder._id.toString());
         
         if(!session.url) {
             return res.status(500).json({ message: "Failed to create checkout session" });
         }
-        
-        //3. Respond with the session URL
+
+        await newOrder.save();
         res.status(200).json({ url: session.url });
     } catch (error: any) {
         console.error("Error creating checkout session:", error);
@@ -49,9 +62,6 @@ const createCheckoutSession = async (req: Request, res: Response) => {
 }
 
 const createLineItems = (cartItems: CartItemType[]) => {
-    //1. For each cartItem, get the menu item details
-    //2. For each cart Item, we need to create a line item with price data and quantity
-    //3. Return the array of line items
     const lineItems = cartItems.map(item => ({
         price_data: {
             currency: "usd",
@@ -83,8 +93,8 @@ const createSession = async (lineItems: any, orderId: string) => {
         ],
         mode: "payment",
         metadata: { orderId },
-        success_url: `${FRONTEND_URL}/order-status?success=true`,
-        cancel_url: `${FRONTEND_URL}/details?orderId=${orderId}?canceled=true`,
+        success_url: `${FRONTEND_URL}?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${FRONTEND_URL}/menu`,
     });
     return session;
 }
