@@ -1,6 +1,7 @@
 import express from "express";
 import { jwtCheck, jwtParse } from "../middleware/auth.js";
 import OrderController from "../controller/orderController.js";
+import Order from "../models/order.js";
 const router = express.Router();
 
 // api/order
@@ -10,5 +11,7 @@ router.post(
     jwtParse,
     OrderController.createCheckoutSession
 );
+
+router.post("/checkout/webhook", OrderController.stripeWebhookHandler)
 
 export default router;
