@@ -24,6 +24,9 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(cors());
+
+app.use("/api/order/checkout/webhook", express.raw({type: "*/*"})) // Stripe requires the raw body for webhook verification
+
 app.use(express.json());
 
 app.use("/api/my/user", myUserRoute)
