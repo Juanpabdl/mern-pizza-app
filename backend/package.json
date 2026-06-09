@@ -11,7 +11,8 @@
     "ext": "ts,js,json"
   },
   "scripts": {
-    "dev": "nodemon src/main.ts",
+    "dev": "concurrently \"nodemon\" \"npm run stripe\"",
+    "stripe": "stripe listen --forward-to localhost:5000/api/order/checkout/webhook",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/main.js"
   },
@@ -38,6 +39,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.0.0",
     "@types/node": "^24.10.1",
+    "concurrently": "^10.0.3",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
