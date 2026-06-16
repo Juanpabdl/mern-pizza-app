@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import type { Order } from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -64,5 +65,46 @@ export const useCreateCheckoutSession = () => {
     return { 
         createCheckoutSession,  
         isPending 
+    };
+}
+
+export const useGetMyOrders = () => {
+    const {getAccessTokenSilently} = useAuth0();
+
+    const getMyOrdersRequest = async (): Promise<Order[]> => {
+        try {
+            const token = await getAccessTokenSilently();
+            const response = await fetch(`${API_BASE_URL}/api/order`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}` // Include the access token in the Authorization header
+                },
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to get orders");
+            }
+
+            return data;
+        } catch (error: any) {
+            console.error("Error fetching orders:", error);
+            throw error;
+        }
+    };
+
+    const {data: orders, isPending, error} = useQuery({
+        queryKey: ["myOrders"],
+        queryFn: getMyOrdersRequest,
+    });
+
+    if (error) {
+        toast.error(error.toString() || "Failed to fetch orders");
+    }
+
+    return {
+        orders,
+        isPending
     };
 }
