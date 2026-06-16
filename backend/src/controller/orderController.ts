@@ -26,12 +26,12 @@ type CheckoutSessionRequest = {
 const getMyOrders = async (req: Request, res: Response) => {
     try {
         const userId = req.userId;
-        
+
         if (!userId) {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        const orders = await Order.find({ user: userId }).populate("user").populate("items.menuItemId", "name");
+        const orders = await Order.find({ user: userId }).populate("user")
         res.status(200).json(orders);
     } catch (error) {
         console.error("Error fetching orders:", error);
