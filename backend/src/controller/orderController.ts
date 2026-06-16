@@ -23,6 +23,22 @@ type CheckoutSessionRequest = {
     }
 }
 
+const getMyOrders = async (req: Request, res: Response) => {
+    try {
+        const userId = req.userId;
+        
+        if (!userId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        const orders = await Order.find({ user: userId }).populate("user").populate("items.menuItemId", "name");
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        res.status(500).json({ message: "Something went wrong" });
+    }   
+}
+
 const stripeWebhookHandler = async (req: Request, res: Response) => {
     let event;
 
@@ -130,4 +146,5 @@ const createSession = async (lineItems: any, orderId: string) => {
 export default {
     createCheckoutSession,
     stripeWebhookHandler,
+    getMyOrders,
 };
