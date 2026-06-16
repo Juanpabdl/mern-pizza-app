@@ -15,3 +15,31 @@ export type MenuItem = {
     imageUrl?: string;
     lastUpdated: string;
 };
+
+export type OrderStatus = 
+    | 'placed' 
+    | 'paid' 
+    | 'inProgress' 
+    | 'outForDelivery' 
+    | 'delivered';
+
+export type Order = {
+    _id: string;
+    user: User;
+    cartItems: {
+        menuItemId: string;
+        name: string;
+        quantity: string;
+    }[];
+    deliveryDetails: {
+        email: string;
+        username: string;
+        addressLine: string;
+        city: string;
+        country: string;
+    };
+    totalAmount: number;
+    status: OrderStatus;
+    createdAt: string;
+    updatedAt: string;
+}
