@@ -26,7 +26,7 @@ export type OrderStatus =
 export type Order = {
     _id: string;
     user: User;
-    cartItems: {
+    items: {
         menuItemId: string;
         name: string;
         quantity: string;

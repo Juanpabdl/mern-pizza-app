@@ -30,10 +30,6 @@ const UserMenu = () => {
                 </DropdownMenuItem>
                 <Separator/>
                 <DropdownMenuItem>
-                    <Link to='/my-cart' className="text-lg font-bold hover:text-orange-400">My Cart</Link>
-                </DropdownMenuItem>
-                <Separator/>
-                <DropdownMenuItem>
                     <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} 
                     className="flex flex-1 font-bold bg-orange-500">
                         Log Out
