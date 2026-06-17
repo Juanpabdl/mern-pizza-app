@@ -9,6 +9,7 @@ import ProtectedRoute from "@/auth/ProtectedRoute";
 import ManageRestaurantPage from "@/pages/ManageRestaurantPage";
 import UpdateMenuPage from "@/pages/UpdateMenuPage";
 import ClientMenuPage from "@/pages/ClientMenuPage";
+import OrderStatusPage from "@/pages/OrderStatusPage";
 import { CartProvider } from "@/utils/CartContext/CartContextProvider";
 
 const router = createBrowserRouter([
@@ -30,10 +31,10 @@ const router = createBrowserRouter([
                     {path: '/user-profile', element: <UserProfilePage/>},
                     {path: '/manage-restaurant', element: <ManageRestaurantPage/>},
                     {path: '/update-menu/:id', element: <UpdateMenuPage/>},
+                    {path: '/order-status', element: <OrderStatusPage/>},
                 ]
             },
             {path: '/menu', element: <CartProvider><ClientMenuPage/></CartProvider>},
-            {path: '/my-cart', element: <div>My Cart Page</div>},
         ]
     },
 ]);

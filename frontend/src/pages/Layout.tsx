@@ -10,6 +10,7 @@ const Layout = () => {
         location.pathname === '/user-profile' ||
         location.pathname === '/manage-restaurant' ||
         location.pathname === '/menu' ||
+        location.pathname === '/order-status' ||
         /^\/update-menu\/\d+/.test(location.pathname);
 
     return(
