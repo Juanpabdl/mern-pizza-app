@@ -21,10 +21,17 @@ type CheckoutSessionRequest = {
     }
 }
 
+type UpdateStatusOrderRequest = {
+    orderId: string;
+    status: string;
+}
+
 export const useCreateCheckoutSession = () => {
     const {getAccessTokenSilently} = useAuth0();
 
-    const createCheckoutSessionRequest = async (checkoutSessionRequest: CheckoutSessionRequest) => {
+    const createCheckoutSessionRequest = async (
+        checkoutSessionRequest: CheckoutSessionRequest
+    ) => {
         try {
             const token = await getAccessTokenSilently();
             const response = await fetch(`${API_BASE_URL}/api/order/checkout/create-checkout-session`, {
@@ -105,6 +112,58 @@ export const useGetMyOrders = () => {
 
     return {
         orders,
+        isPending
+    };
+}
+
+export const useUpdateOrderStatus = () => {
+    const {getAccessTokenSilently} = useAuth0();
+
+    const updateOrderStatusRequest = async (
+        updateStatusOrderRequest: UpdateStatusOrderRequest
+    ) => {
+        try {
+            const token = await getAccessTokenSilently();
+            const response = await fetch(`${API_BASE_URL}/api/order/${updateStatusOrderRequest.orderId}/status`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}` // Include the access token in the Authorization header
+                },
+                body: JSON.stringify({ status: updateStatusOrderRequest.status })
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to update order status");
+            }
+            return data;
+        } catch (error: any) {
+            console.error("Error updating order status:", error);
+            throw error;
+        }
+    };
+
+    const {
+        mutateAsync: updateOrderStatus,
+        error,
+        isPending,
+        isSuccess,
+        reset
+    } = useMutation({
+        mutationFn: updateOrderStatusRequest,
+    });
+
+    if (isSuccess) {
+        toast.success("Order updated ");
+    }
+
+    if (error) {
+        toast.error(error.toString() || "Failed to update order");
+        reset();
+    }
+
+    return {
+        updateOrderStatus,
         isPending
     };
 }

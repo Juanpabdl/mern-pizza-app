@@ -21,4 +21,11 @@ router.post(
 
 router.post("/checkout/webhook", OrderController.stripeWebhookHandler)
 
+router.patch(
+    "/:orderId/status",
+    jwtCheck,
+    jwtParse,
+    OrderController.updateOrderStatus
+)
+
 export default router;

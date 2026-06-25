@@ -1,16 +1,25 @@
 import { ORDER_STATUS } from "@/config/order-status-config";
-import type {Order} from "../types";
+import type {Order, OrderStatus} from "../types";
 import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Separator } from "./ui/separator";
+import {useUpdateOrderStatus} from "@/api/orderAPI";
+import { useState, useEffect } from "react";
 
 type Props = {
     order: Order;
 }
 
 const OrderItemCard = ({ order }: Props) => {
+    const {updateOrderStatus, isPending} = useUpdateOrderStatus();
+    const [status, setStatus] = useState<OrderStatus>(order.status);
+
+    useEffect(() => {
+        setStatus(order.status);
+    }, [order.status]);
+
     const getTime=()=>{
         const orderTime = new Date(order.createdAt);
 
@@ -20,6 +29,12 @@ const OrderItemCard = ({ order }: Props) => {
 
         return `${hours}:${paddedMinutes}`;
     }
+
+    const handleStatusChange = async (newStatus: OrderStatus) => {
+        await updateOrderStatus({ orderId: order._id as string, status: newStatus });
+        setStatus(newStatus);
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -56,7 +71,10 @@ const OrderItemCard = ({ order }: Props) => {
                 </div>
                 <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="status">What is the status of the order?</Label>
-                    <Select>
+                    <Select 
+                    disabled={isPending}
+                    onValueChange={(value) => handleStatusChange(value as OrderStatus)}
+                    value={status}>
                         <SelectTrigger id="status" className="w-full">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
