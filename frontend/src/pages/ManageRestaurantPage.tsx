@@ -4,6 +4,8 @@ import OrderItemCard from "@/components/OrderItemCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCreateMyMenu, useGetMyMenu } from "@/api/myMenuAPI";
 import { useGetMyOrders } from "@/api/orderAPI";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const ManageRestaurantPage = () => {
     const  {createMenu, isPending: isCreateLoading} = useCreateMyMenu();
@@ -33,7 +35,21 @@ const ManageRestaurantPage = () => {
             <TabsContent 
             value="manage-menu"
             className="space-y-5 bg-gray-50 pg-10 rounded-lg">
-                <RestaurantMenuForm onSave={createMenu} isLoading={isCreateLoading} menuItem={menuItems[0]} />
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button className="bg-orange-500 text-white mx-4 my-2 px-4 py-2 rounded-lg hover:bg-orange-600">
+                            Add New Menu Item
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className=" max-h-[90dvh] max-w-[425px] md:min-w-[700px] bg-gray-50 overflow-y-scroll [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-400 [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-transparent">
+                        <DialogHeader>
+                            <DialogTitle>Add New Menu Item</DialogTitle>
+                        </DialogHeader>
+                        <RestaurantMenuForm onSave={createMenu} 
+                        isLoading={isCreateLoading} 
+                        menuItem={menuItems[0]} />
+                    </DialogContent>
+                </Dialog>
                 <ManageMenuList menuItems={menuItems} />
             </TabsContent>
         </Tabs>
