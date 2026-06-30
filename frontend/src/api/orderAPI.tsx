@@ -104,6 +104,7 @@ export const useGetMyOrders = () => {
     const {data: orders, isPending, error} = useQuery({
         queryKey: ["myOrders"],
         queryFn: getMyOrdersRequest,
+        refetchInterval: 5000 // Refetch every 5 seconds
     });
 
     if (error) {
