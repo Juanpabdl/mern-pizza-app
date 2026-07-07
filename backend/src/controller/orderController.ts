@@ -31,7 +31,7 @@ const getMyOrders = async (req: Request, res: Response) => {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        const orders = await Order.find({ user: userId }).populate("user")
+        const orders = await Order.find({ user: userId }).populate("user").sort({ createdAt: -1 })
         res.status(200).json(orders);
     } catch (error) {
         console.error("Error fetching orders:", error);
