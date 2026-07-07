@@ -14,10 +14,10 @@ const Layout = () => {
         /^\/update-menu\/\d+/.test(location.pathname);
 
     return(
-        <div className="flex flex-col min-h-screen w-screen">
+        <div className="flex min-h-screen w-full max-w-full flex-col overflow-x-hidden">
             <Header/>
             {!hideHero && <Hero/>}
-            <div className="w-full mx-auto flex-1 py-10">
+            <div className="mx-auto flex-1 w-full max-w-full py-10">
                 {/* Components go here */}
                 <Outlet/>
             </div>
