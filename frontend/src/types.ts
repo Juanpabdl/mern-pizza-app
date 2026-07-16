@@ -14,6 +14,7 @@ export type MenuItem = {
     category: string[];
     imageUrl?: string;
     lastUpdated: string;
+    isAvailable: boolean;
 };
 
 export type OrderStatus = 

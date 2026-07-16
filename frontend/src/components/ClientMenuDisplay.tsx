@@ -1,4 +1,4 @@
-import { useGetMyMenu } from "@/api/myMenuAPI";
+import { useGetClientMenu } from "@/api/myMenuAPI";
 import type { MenuItem } from "@/types";
 import ClientMenuItemCard from "./ClientMenuItemCard";
 
@@ -7,7 +7,7 @@ type Props = {
 }
 
 const ClientMenuDisplay = ({ category }: Props) => {
-    const { menuItems, isPending } = useGetMyMenu();
+    const { menuItems, isPending } = useGetClientMenu();
 
     const filteredList: MenuItem[] = menuItems?.filter(
         (item: MenuItem) => item.category.includes(category)

@@ -1,8 +1,10 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "./ui/button";
 import type { MenuItem } from "@/types";
-import { Delete, Edit } from "lucide-react";
+import { Delete, Edit, Undo2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useUpdateMenuItemAvailability } from "@/api/myMenuAPI";
 
 type Props = {
     menuItem: MenuItem;
@@ -11,9 +13,21 @@ type Props = {
 
 const ManageMenuListItem = ({key, menuItem}: Props) => {
     const navigate = useNavigate();
+    const {updateMenuItemAvailability} = useUpdateMenuItemAvailability(menuItem._id);
+    const [isAvailable, setIsAvailable] = useState(menuItem.isAvailable);
 
      const handleUpdate = () => {
         navigate(`/update-menu/${menuItem._id}`, {state: {menuItem}});
+     }
+
+     const handleIsAvailable = () => {
+        updateMenuItemAvailability()
+        .then((updatedMenuItem) => {
+            setIsAvailable((prev) => updatedMenuItem?.isAvailable ?? prev);
+        })
+        .catch((error) => {
+            console.error("Error updating menu item availability:", error);
+        });
      }
 
     return (
@@ -33,10 +47,17 @@ const ManageMenuListItem = ({key, menuItem}: Props) => {
                     <Edit className="mr-1 h-4 w-4" />
                     Edit
                 </Button>
-                <Button className="bg-red-500">
-                    <Delete className="mr-1 h-4 w-4" />
-                    Delete
-                </Button>
+                {isAvailable ? (
+                    <Button className="bg-red-500" onClick={handleIsAvailable}>
+                        <Delete className="mr-1 h-4 w-4" />
+                        Remove
+                    </Button>
+                ):(
+                    <Button className="bg-red-300" onClick={handleIsAvailable}>
+                        <Undo2 className="mr-1 h-4 w-4" />
+                        Recover
+                    </Button>
+                )}
             </div>
         </div>
     )

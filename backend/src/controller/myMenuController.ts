@@ -16,6 +16,19 @@ const getMyMenuItems = async (req: Request, res: Response) => {
     }
 };
 
+const getClientMenuItems = async (req: Request, res: Response) => {
+    try {
+        const menuItems = await Menu.find({ isAvailable: true });
+        if (!menuItems || menuItems.length === 0) {
+            return res.status(404).json({ message: 'No menu items found.' });
+        }
+        return res.status(200).json(menuItems);
+    } catch (error) {
+        console.error('Error fetching menu items:', error);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
+};
+
 const createMenuItem = async (req: Request, res: Response) => {
     try {
         //1. Check if menu item with the same name already exists
@@ -94,9 +107,26 @@ const getMenuItemById = async (req: Request, res: Response) => {
     }
 };
 
+const updateMenuItemAvailability = async (req: Request, res: Response) => {
+    try {
+        const menuItem = await Menu.findById(req.params.id);
+        if (!menuItem) {
+            return res.status(404).json({ message: 'Menu item not found.' });
+        }
+        menuItem.isAvailable = !menuItem.isAvailable;
+        await menuItem.save();
+        return res.status(200).json( menuItem );
+    } catch (error) {
+        console.error('Error updating menu item availability:', error);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
+};
+
 export default {
     createMenuItem,
     getMyMenuItems,
+    getClientMenuItems,
     updateMenuItem,
-    getMenuItemById
+    getMenuItemById,
+    updateMenuItemAvailability
 };

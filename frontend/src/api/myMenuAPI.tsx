@@ -79,6 +79,36 @@ export const useGetMyMenu = () => {
     return { menuItems, isPending };
 }
 
+export const useGetClientMenu = () => {
+    const {getAccessTokenSilently} = useAuth0();
+
+    const getClientMenuRequest = async (): Promise<MenuItem[]> => {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch(`${API_BASE_URL}/api/my/menu/client`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        
+        if (!response.ok) {
+            throw new Error("Failed to get menu items");
+        }
+
+        return response.json();
+    };
+
+    const {
+        data: menuItems,
+        isPending,
+    } = useQuery({
+        queryKey: ["fetchClientMenu"],
+        queryFn: getClientMenuRequest,
+    });
+
+    return { menuItems, isPending };
+}
+
 export const useUpdateMyMenu = () => {
     const {getAccessTokenSilently} = useAuth0();
 
@@ -158,4 +188,45 @@ export const useGetMenuItem = (id: string) => {
     });
 
     return { menuItem, isPending };
+};
+
+export const useUpdateMenuItemAvailability = (id: string) => {
+    const {getAccessTokenSilently} = useAuth0();
+
+    const updateMenuItemAvailabilityRequest = async (): Promise<MenuItem> => {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch(`${API_BASE_URL}/api/my/menu/${id}/availability`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update menu item availability");
+        }
+        return response.json();
+    };
+
+    const {
+        mutateAsync: updateMenuItemAvailability,
+        isPending,
+        error,
+        isSuccess
+    } = useMutation({
+        mutationFn: updateMenuItemAvailabilityRequest,
+    });
+
+    if(isSuccess){
+        toast.success("Menu item updated!");
+    }
+
+    if(error){
+        toast.error("Failed to update menu item. Please try again.");
+    }
+
+    return {
+        updateMenuItemAvailability,
+        isPending,
+    };
 };

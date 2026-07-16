@@ -14,7 +14,12 @@ const menuSchema = new mongoose.Schema({
         type: Date, 
         required: true, 
         default: Date.now 
-    }
+    },
+    isAvailable: { 
+        type: Boolean, 
+        required: true, 
+        default: true 
+    },
 });
 
 const Menu = mongoose.model("Menu", menuSchema);

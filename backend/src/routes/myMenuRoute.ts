@@ -20,6 +20,13 @@ router.get(
     myMenuController.getMyMenuItems
 );
 
+router.get(
+    "/client", 
+    jwtCheck,
+    jwtParse,
+    myMenuController.getClientMenuItems
+);
+
 router.post(
     "/",
     upload.single("imageFile"), 
@@ -44,6 +51,13 @@ router.get(
     jwtCheck,
     jwtParse,
     myMenuController.getMenuItemById
+);
+
+router.patch(
+    "/:id/availability",
+    jwtCheck,
+    jwtParse,
+    myMenuController.updateMenuItemAvailability
 );
 
 export default router;
